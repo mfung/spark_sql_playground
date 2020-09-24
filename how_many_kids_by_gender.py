@@ -16,7 +16,8 @@ schema = StructType([
 
 namesDF = sparkSession.read.schema(schema).csv(data_file)
 
-totalBabies = namesDF.agg(functions.sum("amount").alias("total_babies"))
+totalBabies = namesDF.groupBy("gender").agg(
+    functions.sum("amount").alias("total_babies"))
 
 totalBabies.show(totalBabies.count())
 
