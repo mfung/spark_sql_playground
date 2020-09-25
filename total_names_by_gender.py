@@ -7,7 +7,7 @@ script_dir = os.path.dirname(__file__)
 data_file_path = "../data/yob2019.txt"
 data_file = os.path.join(script_dir, data_file_path)
 
-sparkSession = SparkSession.builder.appName("HowManyKids").getOrCreate()
+sparkSession = SparkSession.builder.appName("TotalNamesByGender").getOrCreate()
 
 schema = StructType([
     StructField('name', StringType(), True),
