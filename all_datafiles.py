@@ -27,23 +27,12 @@ def processFile(filename, year):
         "rank", functions.dense_rank().over(nameSpec))
 
     results.withColumn("year", functions.lit(year)).coalesce(1).write.format("csv").mode('overwrite').save(
-        "results/rank_names_partitioned_"+year, header="true")
+        "results/rank_names_partitioned_" + year, header="true")
+
+    sparkSession.stop()
 
 
 os.chdir("../data")
 for file in glob.glob("*.txt"):
     year = re.sub("[^0-9]", '', file)
     processFile(file, year)
-
-
-# namesDF = sparkSession.read.schema(schema).csv(data_file)
-
-# nameSpec = Window.partitionBy("gender").orderBy(functions.desc("amount"))
-
-# results = namesDF.withColumn(
-#     "rank", functions.dense_rank().over(nameSpec))
-
-# results.coalesce(1).write.format("csv").mode('overwrite').save(
-#     "results/rank_names_partitioned.csv", header="true")
-
-# sparkSession.stop()
